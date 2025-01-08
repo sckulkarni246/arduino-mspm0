@@ -1,3 +1,0 @@
-[submodule "cores/arduino/mspm0_driverlib"]
-	path = cores/arduino/mspm0_driverlib
-	url = https://github.com/TexasInstruments/mspm0-sdk
