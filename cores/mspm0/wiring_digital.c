@@ -23,16 +23,59 @@
  extern "C" {
 #endif
 
+#define GPIO_PORT                                                   (GPIOA) // For simplicity only Port A is only used 
+
 void pinMode( pin_size_t ulPin, PinMode ulMode )
 {
+    DL_GPIO_reset(GPIOA);
+    //DL_GPIO_reset(GPIOB);
+
+    DL_GPIO_enablePower(GPIOA);
+    //DL_GPIO_enablePower(GPIOB);
+
+    switch ( ulMode )
+      {
+        case INPUT:
+          DL_GPIO_initDigitalInput(IOMUX_PINCM(ulPin));
+        break ;
+    
+        case INPUT_PULLUP:
+          DL_GPIO_initDigitalInputFeatures(IOMUX_PINCM(ulPin), DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_PULL_UP, DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
+        break ;
+    
+        case INPUT_PULLDOWN:
+          DL_GPIO_initDigitalInputFeatures(IOMUX_PINCM(ulPin), DL_GPIO_INVERSION_DISABLE, DL_GPIO_RESISTOR_PULL_DOWN, DL_GPIO_HYSTERESIS_DISABLE, DL_GPIO_WAKEUP_DISABLE);
+        break ;
+    
+        case OUTPUT:
+           DL_GPIO_initDigitalOutput(IOMUX_PINCM(ulPin));
+        break ;
+    
+        default:
+          // do nothing
+        break ;
+      }
+
 }
 
 void digitalWrite( pin_size_t ulPin, PinStatus ulVal )
 {
+  switch ( ulVal )
+  {
+    case LOW:
+       DL_GPIO_clearPins(GPIO_PORT, ulPin);
+    break ;
+
+    default:
+       DL_GPIO_setPins(GPIO_PORT, ulPin);
+    break ;
+  }
+ 
 }
 
 PinStatus digitalRead( pin_size_t ulPin )
 {
+  return (PinStatus)DL_GPIO_readPins(GPIO_PORT, ulPin);
 }
 
 #ifdef __cplusplus
