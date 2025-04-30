@@ -1,3 +1,7 @@
 [submodule "cores/arduino/mspm0_driverlib"]
 	path = cores/mspm0/mspm0_driverlib
 	url = https://github.com/TexasInstruments/mspm0-sdk
+
+[submodule "ArduinoCore-API"]
+	path = ArduinoCore-API
+	url = https://github.com/arduino/ArduinoCore-API
