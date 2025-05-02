@@ -5,3 +5,6 @@
 [submodule "ArduinoCore-API"]
 	path = ArduinoCore-API
 	url = https://github.com/arduino/ArduinoCore-API
+[submodule "mspm0-sdk"]
+	path = mspm0-sdk
+	url = https://github.com/TexasInstruments/mspm0-sdk
