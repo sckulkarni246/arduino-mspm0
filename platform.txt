@@ -7,14 +7,14 @@ compiler.warning_flags.default=
 compiler.warning_flags.more=-Wall
 compiler.warning_flags.all=-Wall -Wextra
 
-compiler.includes=-IC:\ti\mspm0_sdk_2_03_00_07\source\ti\driverlib -IC:\ti\mspm0_sdk_2_03_00_07\source -IC:\ti\mspm0_sdk_2_03_00_07\source\third_party\CMSIS\Core\Include -IC:\Users\a0132277\AppData\Local\Arduino15\packages\mspm0\hardware\mspm0\0.1.4\cores\mspm0 -IC:\Users\a0132277\AppData\Local\Arduino15\packages\mspm0\hardware\mspm0\0.1.4\ArduinoCore-API
+compiler.includes=-I{runtime.platform.path}/mspm0-sdk/source/ti/driverlib -I{runtime.platform.path}/mspm0-sdk/source -I{runtime.platform.path}/mspm0-sdk/source/third_party/CMSIS/Core/Include -I{runtime.platform.path}/cores/mspm0 -I{runtime.platform.path}/ArduinoCore-API
 
 compiler.path={runtime.tools.ti-cgt-armllvm.path}/bin/
 
 compiler.c.cmd=tiarmclang
 compiler.c.flags=-c -march=thumbv6m -mcpu=cortex-m0plus -mfloat-abi=soft -mlittle-endian -mthumb -O0 {compiler.includes} -gdwarf-3 -MMD -D__MSPM0G3507__
 
-compiler.c.elf.flags=-march=thumbv6m -mcpu=cortex-m0plus -mfloat-abi=soft -mlittle-endian -mthumb -O0 -gdwarf-3 -D__MSPM0G3507__ -Wl,-msketch_output.map -Wl,-i"C:/ti/mspm0_sdk_2_03_00_07/source" -Wl,-i"{runtime.tools.ti-cgt-armllvm.path}/lib" -Wl,--diag_wrap=off -Wl,--display_error_number -Wl,--warn_sections -Wl,--xml_link_info=sketch_output.xml -Wl,--rom_model -Wl,-lC:\ti\mspm0_sdk_2_03_00_07\source\ti\devices\msp\m0p\linker_files\ticlang\mspm0g3507.cmd  -Wl,-lC:\ti\mspm0_sdk_2_03_00_07\source\ti\driverlib\lib\ticlang\m0p\mspm0g1x0x_g3x0x\driverlib.a
+compiler.c.elf.flags=-march=thumbv6m -mcpu=cortex-m0plus -mfloat-abi=soft -mlittle-endian -mthumb -O0 -gdwarf-3 -D__MSPM0G3507__ -Wl,-msketch_output.map -Wl,-i"{runtime.platform.path}/mspm0-sdk/source" -Wl,-i"{runtime.tools.ti-cgt-armllvm.path}/lib" -Wl,--diag_wrap=off -Wl,--display_error_number -Wl,--warn_sections -Wl,--xml_link_info=sketch_output.xml -Wl,--rom_model -Wl,-l{runtime.platform.path}/mspm0-sdk/source/ti/devices/msp/m0p/linker_files/ticlang/mspm0g3507.cmd  -Wl,-l{runtime.platform.path}/mspm0-sdk/source/ti/driverlib/lib/ticlang/m0p/mspm0g1x0x_g3x0x/driverlib.a
 compiler.c.elf.cmd=tiarmclang
 
 # compiler.S.flags=-c -g -x assembler-with-cpp -flto -MMD
