@@ -1,0 +1,87 @@
+name=TI MSPM0 Launchpads
+version=0.1.4
+
+compiler.warning_flags=-w
+compiler.warning_flags.none=-w
+compiler.warning_flags.default=
+compiler.warning_flags.more=-Wall
+compiler.warning_flags.all=-Wall -Wextra
+
+compiler.includes=-IC:\ti\mspm0_sdk_2_03_00_07\source\ti\driverlib -IC:\ti\mspm0_sdk_2_03_00_07\source -IC:\ti\mspm0_sdk_2_03_00_07\source\third_party\CMSIS\Core\Include -IC:\Users\a0132277\AppData\Local\Arduino15\packages\mspm0\hardware\mspm0\0.1.4\cores\mspm0 -IC:\Users\a0132277\AppData\Local\Arduino15\packages\mspm0\hardware\mspm0\0.1.4\ArduinoCore-API
+
+compiler.path={runtime.tools.ti-cgt-armllvm.path}/bin/
+
+compiler.c.cmd=tiarmclang
+compiler.c.flags=-c -march=thumbv6m -mcpu=cortex-m0plus -mfloat-abi=soft -mlittle-endian -mthumb -O0 {compiler.includes} -gdwarf-3 -MMD -D__MSPM0G3507__
+
+compiler.c.elf.flags=-march=thumbv6m -mcpu=cortex-m0plus -mfloat-abi=soft -mlittle-endian -mthumb -O0 -gdwarf-3 -D__MSPM0G3507__ -Wl,-msketch_output.map -Wl,-i"C:/ti/mspm0_sdk_2_03_00_07/source" -Wl,-i"{runtime.tools.ti-cgt-armllvm.path}/lib" -Wl,--diag_wrap=off -Wl,--display_error_number -Wl,--warn_sections -Wl,--xml_link_info=sketch_output.xml -Wl,--rom_model -Wl,-lC:\ti\mspm0_sdk_2_03_00_07\source\ti\devices\msp\m0p\linker_files\ticlang\mspm0g3507.cmd  -Wl,-lC:\ti\mspm0_sdk_2_03_00_07\source\ti\driverlib\lib\ticlang\m0p\mspm0g1x0x_g3x0x\driverlib.a
+compiler.c.elf.cmd=tiarmclang
+
+# compiler.S.flags=-c -g -x assembler-with-cpp -flto -MMD
+
+compiler.cpp.cmd=tiarmclang
+compiler.cpp.flags=-c -march=thumbv6m -mcpu=cortex-m0plus -mfloat-abi=soft -mlittle-endian -mthumb -O0 {compiler.includes} -gdwarf-3 -MMD -D__MSPM0G3507__
+
+compiler.ar.cmd=tiarmar
+compiler.ar.flags=rcs
+
+compiler.objcopy.cmd=tiarmobjcopy
+
+compiler.elf2hex.flags=--memwidth=8 --romwidth=8 --diag_wrap=off --intel -o
+compiler.elf2hex.cmd=tiarmhex
+
+compiler.ldflags=
+
+compiler.libraries.ldflags=
+
+compiler.size.cmd=tiarmsize
+
+# MSPM0 compile patterns
+# ----------------------
+
+## Compile c files
+recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} {includes} "{source_file}" -o "{object_file}"
+
+## Compile c++ files
+recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {includes} "{source_file}" -o "{object_file}"
+
+## Compile S files
+#recipe.S.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.S.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.S.extra_flags} #{build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+
+## Create archives
+# archive_file_path is needed for backwards compatibility with IDE 1.6.5 or older, IDE 1.6.6 or newer overrides this value
+archive_file_path={build.path}/{archive_file}
+recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{archive_file_path}" "{object_file}"
+
+## Combine gc-sections, archives, and objects
+recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {compiler.c.elf.flags} {compiler.ldflags} -o "{build.path}/{build.project_name}.elf" {object_files} {compiler.libraries.ldflags} -Wl,-llibc.a "{build.path}/{archive_file}" "-L{build.path}" 
+#removed -lm from above
+
+## Create output files (.eep and .hex)
+#recipe.objcopy.eep.pattern="{compiler.path}{compiler.objcopy.cmd}" {compiler.objcopy.eep.flags} {compiler.objcopy.eep.extra_flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.eep"
+recipe.objcopy.hex.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.flags} "{build.path}/{build.project_name}.hex" "{build.path}/{build.project_name}.elf"
+
+## Save hex
+recipe.output.tmp_file={build.project_name}.hex
+recipe.output.save_file={build.project_name}.{build.variant}.hex
+
+## Compute size
+recipe.size.pattern="{compiler.path}{compiler.size.cmd}" -A "{build.path}/{build.project_name}.elf"
+recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
+recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
+recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
+
+## Preprocessor
+preproc.includes.flags=-w -x c++ -M -MG -MP
+recipe.preproc.includes="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {preproc.includes.flags} {compiler.cpp.extra_flags} {build.extra_flags} {includes} "{source_file}"
+
+preproc.macros.flags=-w -x c++ -E -CC
+recipe.preproc.macros="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {preproc.macros.flags} {compiler.cpp.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{preprocessed_file_path}"
+
+
+
+
+
+
+
+
