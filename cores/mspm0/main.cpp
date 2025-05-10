@@ -1,9 +1,9 @@
 #include "Arduino.h"
 
-extern void setup();
-extern void loop();
+extern "C" void setup();
+extern "C" void loop();
 
-int main() {
+extern "C" int main() {
     // Bare-bones implementation as of now!
     setup();
 

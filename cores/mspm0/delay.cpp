@@ -29,12 +29,12 @@ extern "C"
     }
 
 
-    uint32_t millis() {
+    unsigned long millis() {
        //TODO
       return 1;
     }
 
-    uint32_t micros() {
+    unsigned long micros() {
       //TODO
         return 1;
     }
