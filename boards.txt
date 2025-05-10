@@ -26,8 +26,8 @@ lpm0g3507.upload.tool=avrdude
 lpm0g3507.upload.tool.default=avrdude
 lpm0g3507.upload.tool.network=arduino_ota
 lpm0g3507.upload.protocol=arduino
-lpm0g3507.upload.maximum_size=32256
-lpm0g3507.upload.maximum_data_size=2048
+lpm0g3507.upload.maximum_size=131072
+lpm0g3507.upload.maximum_data_size=32768
 lpm0g3507.upload.speed=115200
 
 lpm0g3507.bootloader.tool=avrdude
