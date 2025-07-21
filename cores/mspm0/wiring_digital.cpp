@@ -31,6 +31,7 @@ void pinMode( pin_size_t ulPin, PinMode ulMode )
     //DL_GPIO_reset(GPIOB);
 
     DL_GPIO_enablePower(GPIOA);
+    delay_cycles(16);
     //DL_GPIO_enablePower(GPIOB);
 
     switch ( ulMode )
@@ -48,7 +49,9 @@ void pinMode( pin_size_t ulPin, PinMode ulMode )
         break ;
     
         case OUTPUT:
-           DL_GPIO_initDigitalOutput(IOMUX_PINCM(ulPin));
+          DL_GPIO_initDigitalOutput(0);
+          DL_GPIO_enableOutput(GPIOA,1);
+
         break ;
     
         default:

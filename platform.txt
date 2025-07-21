@@ -1,5 +1,5 @@
 name=TI MSPM0 Launchpads
-version=0.1.5
+version=0.1.8
 
 compiler.warning_flags=-w
 compiler.warning_flags.none=-w
